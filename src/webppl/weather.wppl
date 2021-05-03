@@ -1,0 +1,22 @@
+var model = function() {
+  var x = flip(0.25) ? 'cloudy' : 'sunny'
+
+  var mu    = {'cloudy': 10.0, 'sunny': 30.0}[x]
+  var sigma = {'cloudy':  1.0, 'sunny':  1.0}[x]
+
+  var y = sample(Gaussian({mu: mu, sigma: sigma}))
+
+//   condition(y > 25)       // P(y|y > 25)
+//   condition(x == 'sunny') // P(y|x == 'sunny')
+
+  /* won't finish, as it's extremely unlikely
+     to have temperatures > 30 when it's cloudy
+   */
+//   condition(x == 'cloudy' && y > 20)
+
+  return y
+}
+
+// P(y|<condition_statements>)
+var dist = Infer({method: 'rejection', samples: 10000}, model)
+viz(dist)

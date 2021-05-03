@@ -1,0 +1,44 @@
+// global context (might be dangerous)
+Object.assign(globalStore, {
+  iter: 1,
+  stop: 10
+});
+
+var forloop = function(test, body, post) {
+  if (!test())
+    return;
+
+  body();
+  post();
+
+  forloop(test, body, post);
+}
+
+var test = function() { return globalStore.iter <= globalStore.stop;};
+var body = function() { console.log('hi' + globalStore.iter)};
+var post = function() { globalStore.iter += 1;};
+
+// forloop(test, body, post) // usage
+
+// -------------------------------- //
+
+// there is Lodash lib which provides functional constructs
+// but most of it it's not working in WebPPL
+// however, there are helpers in src/header.wppl
+const F = _;
+
+var xs = F.range(-10, 10, 1)
+
+// F.map() returns only null
+var xm = map(function (x) {return x * x}, xs)
+
+// F.reduce() says the result is a function
+var xr = reduce(function(acc, x) {return acc + x}, 0, xs)
+
+// F.filter() doesn't apply the predicate
+var xf = filter(function(x) {return x % 2 == 0}, xs)
+
+// first element in xs to sat the predicate
+var xi = find(function(x) {return x % 2 == 0}, xs)
+
+// ! no forEach
