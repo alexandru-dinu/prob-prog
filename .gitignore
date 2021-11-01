@@ -1,3 +1,6 @@
+.idea/
+.vscode/
+
 # Haskell
 dist
 dist-*
