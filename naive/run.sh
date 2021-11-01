@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT=biased_coin
+SCRIPT=naive
 NUM=100000
 
 echo "Haskell"
